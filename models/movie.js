@@ -73,9 +73,8 @@ const cardSchema = mongoose.Schema({
     ref: 'user',
   },
   movieId: {
+    type: String,
     required: true,
-    // id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
-    // необходимо дописать код
   },
   nameRU: {
     type: String,
