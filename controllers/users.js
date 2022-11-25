@@ -6,6 +6,13 @@ const IncorrectDataError = require('../errors/incorrectDataError');
 const User = require('../models/user');
 const EmailNotUniqueError = require('../errors/emailNotUniqeError');
 
+const {
+  EMAIL_ALREADY_EXISTS,
+  REGISTER_INCORRECT_DATA,
+  USER_NOT_FOUND,
+  INCORRECT_DATA_EDIT_PROFILE,
+} = require('../utils/utils');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUser = (req, res, next) => {
@@ -31,9 +38,9 @@ module.exports.createUser = (req, res, next) => {
         }))
         .catch((err) => {
           if (err.code === 11000) {
-            next(new EmailNotUniqueError('Такой пользователь уже существует, введите другой email'));
+            next(new EmailNotUniqueError(EMAIL_ALREADY_EXISTS));
           } else if (err.name === 'ValidationError') {
-            next(new IncorrectDataError('Переданы некорректные данные при создании пользователя, произошла ошибка валидации'));
+            next(new IncorrectDataError(REGISTER_INCORRECT_DATA));
           } else {
             next(err);
           }
@@ -61,13 +68,13 @@ module.exports.editUser = (req, res, next) => {
     { name, email },
     { new: true, runValidators: true },
   )
-    .orFail(() => new NotFoundError('Пользователь с указанным _id не найден, произошла ошибка'))
+    .orFail(() => new NotFoundError(USER_NOT_FOUND))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'NotFound') {
-        next(new NotFoundError('Пользователь с указанным _id не найден, произошла ошибка'));
+        next(new NotFoundError(USER_NOT_FOUND));
       } else if (err.name === 'ValidationError') {
-        next(new IncorrectDataError('Переданы некорректные данные при обновлении профиля, произошла ошибка валидации'));
+        next(new IncorrectDataError(INCORRECT_DATA_EDIT_PROFILE));
       } else {
         next(err);
       }

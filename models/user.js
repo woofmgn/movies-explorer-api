@@ -3,6 +3,11 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const IncorrectDataError = require('../errors/incorrectDataError');
 const IncorrectTokenError = require('../errors/incorrectTokenError');
+const {
+  USER_IS_NOT_REGISTERED,
+  INCORRECT_EMAIL_OR_PASS,
+  INCORRECT_EMAIL,
+} = require('../utils/utils');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,7 +22,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: validator.isEmail,
-      message: 'Некоррекный email',
+      message: INCORRECT_EMAIL,
     },
   },
   password: {
@@ -27,18 +32,17 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// eslint-disable-next-line func-names
-userSchema.statics.findUserByCredentials = function (email, password) {
+userSchema.statics.findUserByCredentials = function checking(email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new IncorrectTokenError('Данный пользователь не зарегистрирован'));
+        return Promise.reject(new IncorrectTokenError(USER_IS_NOT_REGISTERED));
       }
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new IncorrectDataError('Неправильные почта или пароль'));
+            return Promise.reject(new IncorrectDataError(INCORRECT_EMAIL_OR_PASS));
           }
 
           return user;
