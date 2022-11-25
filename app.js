@@ -14,6 +14,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const corsMiddleware = require('./middlewares/corsMiddleware');
 const rateLimiter = require('./middlewares/rateLimiter');
 const NotFoundError = require('./errors/notFoundError');
+const { PAGE_NOT_FOUND } = require('./utils/utils');
 
 const { PORT, MONGO_DB } = process.env;
 
@@ -34,7 +35,7 @@ app.post('/signin', validationLoginUser, login);
 app.post('/signup', validationCreateUser, createUser);
 app.use(router);
 app.use('*', () => {
-  throw new NotFoundError('Запрашиваемая страница не найдена');
+  throw new NotFoundError(PAGE_NOT_FOUND);
 });
 
 app.use(errorLogger);

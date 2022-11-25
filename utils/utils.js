@@ -1,4 +1,5 @@
 const REGEX_URL = /[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
+
 const INCORRECT_DATA_CREATE_MOVIE = 'Переданы некорректные данные для добавления фильм, произошла ошибка валидации';
 const MOVIE_NOT_FOUND = 'Фильм с указанным _id не найден';
 const FORBIDDEN_DELETE_MOVIE = 'Нельзя удалить чужой фильм';
@@ -13,6 +14,7 @@ const AUTHORIZATION_REQUIRED = 'Необходима авторизация';
 const DEFAULT_ERROR = 'Произошла ошибка';
 const INCORRECT_URL = 'Некорректный URL';
 const INCORRECT_EMAIL = 'Некоррекный email';
+const PAGE_NOT_FOUND = 'Запрашиваемая страница не найдена';
 
 module.exports = {
   REGEX_URL,
@@ -30,4 +32,5 @@ module.exports = {
   DEFAULT_ERROR,
   INCORRECT_URL,
   INCORRECT_EMAIL,
+  PAGE_NOT_FOUND,
 };
