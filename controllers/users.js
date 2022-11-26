@@ -75,6 +75,8 @@ module.exports.editUser = (req, res, next) => {
         next(new NotFoundError(USER_NOT_FOUND));
       } else if (err.name === 'ValidationError') {
         next(new IncorrectDataError(INCORRECT_DATA_EDIT_PROFILE));
+      } else if (err.code === 11000) {
+        next(new EmailNotUniqueError(EMAIL_ALREADY_EXISTS));
       } else {
         next(err);
       }
