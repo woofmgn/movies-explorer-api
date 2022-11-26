@@ -21,9 +21,3 @@ module.exports.validationUserEdit = celebrate({
     email: Joi.string().required().email(),
   }),
 });
-
-module.exports.validationUserId = celebrate({
-  params: Joi.object().keys({
-    id: Joi.string().required().hex().length(24),
-  }),
-});
