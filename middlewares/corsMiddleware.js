@@ -3,9 +3,9 @@ const allowedCors = [
   'http://vden.movies.nomoredomains.club',
   'https://www.vden.movies.nomoredomains.club',
   'http://www.vden.movies.nomoredomains.club',
-  'localhost:3001',
-  'http://localhost:3001',
-  'https://localhost:3001',
+  'localhost:3000',
+  'http://localhost:3000',
+  'https://localhost:3000',
 ];
 
 module.exports = (req, res, next) => {

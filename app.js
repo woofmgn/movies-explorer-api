@@ -17,7 +17,7 @@ const { PORT_CONFIG, DB_CONFIG } = require('./utils/config');
 
 const app = express();
 
-mongoose.connect(DB_CONFIG);
+mongoose.connect(DB_CONFIG, { family: 4 });
 
 app.use(bodyParser.json());
 
